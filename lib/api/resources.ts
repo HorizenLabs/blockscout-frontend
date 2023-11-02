@@ -28,6 +28,7 @@ import type {
   AddressWithdrawalsResponse,
   AddressNFTsResponse,
   AddressCollectionsResponse,
+  AddressNFTTokensFilter,
 } from 'types/api/address';
 import type { AddressesResponse } from 'types/api/addresses';
 import type { BlocksResponse, BlockTransactionsResponse, Block, BlockFilters, BlockWithdrawalsResponse } from 'types/api/block';
@@ -307,12 +308,12 @@ export const RESOURCES = {
   address_nfts: {
     path: '/api/v2/addresses/:hash/nft',
     pathParams: [ 'hash' as const ],
-    filterFields: [ ],
+    filterFields: [ 'type' as const ],
   },
   address_collections: {
     path: '/api/v2/addresses/:hash/nft/collections',
     pathParams: [ 'hash' as const ],
-    filterFields: [ ],
+    filterFields: [ 'type' as const ],
   },
   address_withdrawals: {
     path: '/api/v2/addresses/:hash/withdrawals',
@@ -668,6 +669,8 @@ Q extends 'token_transfers' ? TokenTransferFilters :
 Q extends 'address_txs' | 'address_internal_txs' ? AddressTxsFilters :
 Q extends 'address_token_transfers' ? AddressTokenTransferFilters :
 Q extends 'address_tokens' ? AddressTokensFilter :
+Q extends 'address_nfts' ? AddressNFTTokensFilter :
+Q extends 'address_collections' ? AddressNFTTokensFilter :
 Q extends 'search' ? SearchResultFilters :
 Q extends 'token_inventory' ? TokenInventoryFilters :
 Q extends 'tokens' ? TokensFilters :
