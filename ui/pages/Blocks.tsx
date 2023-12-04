@@ -46,24 +46,10 @@ const BlocksPageContent = () => {
       } }),
     },
   });
-  const unclesQuery = useQueryWithPages({
-    resourceName: 'blocks',
-    filters: { type: 'uncle' },
-    options: {
-      enabled: tab === 'uncles',
-      placeholderData: generateListStub<'blocks'>(BLOCK, 50, { next_page_params: {
-        block_number: 8988686,
-        items_count: 50,
-      } }),
-    },
-  });
 
   const pagination = (() => {
     if (tab === 'reorgs') {
       return reorgsQuery.pagination;
-    }
-    if (tab === 'uncles') {
-      return unclesQuery.pagination;
     }
     return blocksQuery.pagination;
   })();
@@ -71,7 +57,6 @@ const BlocksPageContent = () => {
   const tabs: Array<RoutedTab> = [
     { id: 'blocks', title: 'All', component: <BlocksContent type="block" query={ blocksQuery }/> },
     { id: 'reorgs', title: 'Forked', component: <BlocksContent type="reorg" query={ reorgsQuery }/> },
-    { id: 'uncles', title: 'Uncles', component: <BlocksContent type="uncle" query={ unclesQuery }/> },
   ];
 
   return (

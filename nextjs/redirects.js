@@ -93,10 +93,6 @@ const oldUrls = [
     destination: '/block/:height/:path*',
   },
   {
-    source: '/uncles',
-    destination: '/blocks?tab=uncles',
-  },
-  {
     source: '/reorgs',
     destination: '/blocks?tab=reorgs',
   },
