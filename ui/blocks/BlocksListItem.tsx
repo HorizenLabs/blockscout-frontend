@@ -101,7 +101,7 @@ const BlocksListItem = ({ data, isLoading, enableTimeIncrement }: Props) => {
       ) }
       { !isRollup && !config.UI.views.block.hiddenFields?.burnt_fees && (
         <Box>
-          <Text fontWeight={ 500 }>Burnt fees</Text>
+          <Text fontWeight={ 500 }>Reward pool fees</Text>
           <Flex columnGap={ 4 } mt={ 2 }>
             <Flex>
               <Icon as={ flameIcon } boxSize={ 5 } color="gray.500" isLoading={ isLoading }/>

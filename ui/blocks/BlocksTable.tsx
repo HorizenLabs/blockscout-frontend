@@ -46,9 +46,10 @@ const BlocksTable = ({ data, isLoading, top, page, showSocketInfo, socketInfoNum
           <Th width="64px" isNumeric>Txn</Th>
           <Th width={ `${ GAS_COL_WEIGHT / widthBase * 100 }%` }>Gas used</Th>
           { !isRollup && !config.UI.views.block.hiddenFields?.total_reward &&
+              // DOUBLE CHECK: we have this other Reward column, is it ok?
               <Th width={ `${ REWARD_COL_WEIGHT / widthBase * 100 }%` }>Reward { config.chain.currency.symbol }</Th> }
           { !isRollup && !config.UI.views.block.hiddenFields?.burnt_fees &&
-              <Th width={ `${ FEES_COL_WEIGHT / widthBase * 100 }%` }>Burnt fees { config.chain.currency.symbol }</Th> }
+              <Th width={ `${ FEES_COL_WEIGHT / widthBase * 100 }%` }>Reward pool fees { config.chain.currency.symbol }</Th> }
         </Tr>
       </Thead>
       <Tbody>

@@ -431,7 +431,8 @@ const TxDetails = () => {
         ) }
         { data.tx_burnt_fee && !config.UI.views.tx.hiddenFields?.burnt_fees && !config.features.optimisticRollup.isEnabled && (
           <DetailsInfoItem
-            title="Burnt fees"
+            title="Reward pool fees"
+            // DOUBLE CHECK: is this calculation correct with the new naming?
             hint={ `Amount of ${ config.chain.currency.symbol } burned for this transaction. Equals Block Base Fee per Gas * Gas Used` }
           >
             <Icon as={ flameIcon } boxSize={ 5 } color="gray.500"/>

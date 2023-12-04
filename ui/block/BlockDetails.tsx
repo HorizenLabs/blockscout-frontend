@@ -113,7 +113,7 @@ const BlockDetails = ({ query }: Props) => {
         { !burntFees.isEqualTo(ZERO) && (
           <>
             { space }-{ space }
-            <Tooltip label="Burnt fees">
+            <Tooltip label="Reward pool fees">
               <span>{ burntFees.dividedBy(WEI).toFixed() }</span>
             </Tooltip>
           </>
@@ -308,8 +308,9 @@ const BlockDetails = ({ query }: Props) => {
       ) }
       { !config.UI.views.block.hiddenFields?.burnt_fees && (
         <DetailsInfoItem
-          title="Burnt fees"
+          title="Reward pool fees"
           hint={
+            //DOUBLE CHECK: Update this text
             `Amount of ${ config.chain.currency.symbol || 'native token' } burned from transactions included in the block.
 
           Equals Block Base Fee per Gas * Gas Used`
@@ -321,7 +322,8 @@ const BlockDetails = ({ query }: Props) => {
             { burntFees.dividedBy(WEI).toFixed() } { config.chain.currency.symbol }
           </Skeleton>
           { !txFees.isEqualTo(ZERO) && (
-            <Tooltip label="Burnt fees / Txn fees * 100%">
+            // DOUBLE CHECK: Is this calculation correct with the new naming?
+            <Tooltip label="Reward pool fees / Txn fees * 100%">
               <Box>
                 <Utilization
                   ml={ 4 }

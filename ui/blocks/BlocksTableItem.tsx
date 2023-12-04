@@ -119,7 +119,7 @@ const BlocksTableItem = ({ data, isLoading, enableTimeIncrement }: Props) => {
               { burntFees.dividedBy(WEI).toFixed(8) }
             </Skeleton>
           </Flex>
-          <Tooltip label={ isLoading ? undefined : 'Burnt fees / Txn fees * 100%' }>
+          <Tooltip label={ isLoading ? undefined : 'Reward pool fees / Txn fees * 100%' }>
             <Box w="min-content">
               <Utilization mt={ 2 } value={ burntFees.div(txFees).toNumber() } isLoading={ isLoading }/>
             </Box>
