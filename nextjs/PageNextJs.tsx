@@ -31,11 +31,12 @@ const PageNextJs = (props: Props) => {
 
         { /* OG TAGS */ }
         <meta property="og:title" content={ opengraph.title }/>
+        { opengraph.url && <meta property="og:url" content={ opengraph.url }/> }
+        <meta property="og:type" content="website"/>
         { opengraph.description && <meta property="og:description" content={ opengraph.description }/> }
         <meta property="og:image" content={ opengraph.imageUrl }/>
         <meta name="twitter:card" content="summary_large_image"/>
         <meta property="twitter:image" content={ opengraph.imageUrl }/>
-        <meta property="og:type" content="website"/>
       </Head>
       { props.children }
     </>

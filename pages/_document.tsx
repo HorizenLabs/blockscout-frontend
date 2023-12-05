@@ -27,7 +27,7 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html lang="en">
+      <Html lang="en-US">
         <Head>
           { /* FONTS */ }
           <link
@@ -48,6 +48,7 @@ class MyDocument extends Document {
           <link rel="icon" sizes="16x16" type="image/png"href="/favicon/favicon-16x16.png"/>
           <link rel="apple-touch-icon" href="/favicon/apple-touch-icon-180x180.png"/>
           <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg"/>
+          <meta name="keywords" content="BlockScout, blockchain, api, analytics, address, smart contract"></meta>
         </Head>
         <body>
           <ColorModeScript initialColorMode={ theme.config.initialColorMode }/>

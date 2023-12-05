@@ -1,8 +1,10 @@
 import type { Route } from 'nextjs-routes';
 
+import { getEnvValue } from 'configs/app/utils';
+
 // equal og:description
 // eslint-disable-next-line max-len
-const DEFAULT_TEMPLATE = 'Blockscout is the #1 open-source blockchain explorer available today. 100+ chains and counting rely on Blockscout data availability, APIs, and ecosystem tools to support their networks.';
+const DEFAULT_TEMPLATE = getEnvValue('NEXT_PUBLIC_OG_DESCRIPTION') || '';
 
 // FIXME all page descriptions will be updated later
 const TEMPLATE_MAP: Record<Route['pathname'], string> = {

@@ -1,7 +1,7 @@
 import type { Route } from 'nextjs-routes';
 
 const TEMPLATE_MAP: Record<Route['pathname'], string> = {
-  '/': 'blockchain explorer',
+  '/': '',
   '/txs': 'transactions',
   '/txs/kettle/[hash]': 'kettle %hash% transactions',
   '/tx/[hash]': 'transaction %hash%',
@@ -15,18 +15,18 @@ const TEMPLATE_MAP: Record<Route['pathname'], string> = {
   '/token/[hash]': '%symbol% token details',
   '/token/[hash]/instance/[id]': 'token instance for %symbol%',
   '/apps': 'apps marketplace',
-  '/apps/[id]': '- %app_name%',
+  '/apps/[id]': '%app_name%',
   '/stats': 'statistics',
   '/api-docs': 'REST API',
   '/graphiql': 'GraphQL',
   '/search-results': 'search result for %q%',
-  '/auth/profile': '- my profile',
-  '/account/watchlist': '- watchlist',
-  '/account/api-key': '- API keys',
-  '/account/custom-abi': '- custom ABI',
-  '/account/public-tags-request': '- public tag requests',
-  '/account/tag-address': '- private tags',
-  '/account/verified-addresses': '- my verified addresses',
+  '/auth/profile': 'my profile',
+  '/account/watchlist': 'watchlist',
+  '/account/api-key': 'API keys',
+  '/account/custom-abi': 'custom ABI',
+  '/account/public-tags-request': 'public tag requests',
+  '/account/tag-address': 'private tags',
+  '/account/verified-addresses': 'my verified addresses',
   '/withdrawals': 'withdrawals',
   '/visualize/sol2uml': 'Solidity UML diagram',
   '/csv-export': 'export data to CSV',
@@ -51,5 +51,8 @@ const TEMPLATE_MAP: Record<Route['pathname'], string> = {
 export function make(pathname: Route['pathname']) {
   const template = TEMPLATE_MAP[pathname];
 
-  return `%network_name% ${ template }`;
+  const capitalizedTemplate = template.charAt(0).toUpperCase() + template.slice(1);
+  const networkWithTemplate = `%network_name% Block Explorer${ capitalizedTemplate ? ` - ${ capitalizedTemplate }` : '' }`;
+
+  return networkWithTemplate + ' | Horizen EON';
 }

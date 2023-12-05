@@ -2,9 +2,14 @@ import { getEnvValue } from './utils';
 
 const DEFAULT_CURRENCY_DECIMALS = 18;
 
+const getNetworkNameWithoutPrefix = (networkName: string) => {
+  const prefix = 'Horizen ';
+  return networkName.startsWith(prefix) ? networkName.slice(prefix.length) : networkName;
+};
+
 const chain = Object.freeze({
   id: getEnvValue('NEXT_PUBLIC_NETWORK_ID'),
-  name: getEnvValue('NEXT_PUBLIC_NETWORK_NAME'),
+  name: getNetworkNameWithoutPrefix(getEnvValue('NEXT_PUBLIC_NETWORK_NAME') || ''),
   shortName: getEnvValue('NEXT_PUBLIC_NETWORK_SHORT_NAME'),
   currency: {
     name: getEnvValue('NEXT_PUBLIC_NETWORK_CURRENCY_NAME'),
