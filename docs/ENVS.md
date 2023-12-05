@@ -185,7 +185,6 @@ Settings for meta tags and OG tags
 ##### Block fields list
 | Id | Description |
 | --- | --- |
-<!-- DOUBLE CHECK: Should we rename also the burnt_fees field? -->
 | `burnt_fees` | Reward pool fees |
 | `total_reward` | Total block reward |
 | `nonce` | Block nonce |
