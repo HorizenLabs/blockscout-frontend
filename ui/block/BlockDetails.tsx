@@ -127,7 +127,7 @@ const BlockDetails = ({ query }: Props) => {
       return 'Sequenced by';
     }
 
-    return config.chain.verificationType === 'validation' ? 'Validated by' : 'Mined by';
+    return config.chain.verificationType === 'validation' ? 'Forged by' : 'Mined by';
   })();
 
   return (

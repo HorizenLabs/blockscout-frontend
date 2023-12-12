@@ -125,7 +125,7 @@ const BlockPageContent = () => {
         fontWeight={ 500 }
       >
         <chakra.span flexShrink={ 0 }>
-          { config.chain.verificationType === 'validation' ? 'Validated by' : 'Mined by' }
+          { config.chain.verificationType === 'validation' ? 'Forged by' : 'Mined by' }
         </chakra.span>
         <AddressEntity address={ blockQuery.data?.miner }/>
       </Skeleton>
