@@ -33,5 +33,4 @@ export const BLOCK: Block = {
   tx_count: 142,
   tx_fees: '19241635547777613',
   type: 'block',
-  uncles_hashes: [],
 };

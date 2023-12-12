@@ -2,7 +2,7 @@ import type { AddressParam } from 'types/api/addressParams';
 import type { Reward } from 'types/api/reward';
 import type { Transaction } from 'types/api/transaction';
 
-export type BlockType = 'block' | 'reorg' | 'uncle';
+export type BlockType = 'block' | 'reorg' ;
 
 export interface Block {
   height: number;
@@ -28,7 +28,6 @@ export interface Block {
   burnt_fees_percentage: number | null;
   type: BlockType;
   tx_fees: string | null;
-  uncles_hashes: Array<string>;
   withdrawals_count?: number;
   // ROOTSTOCK FIELDS
   bitcoin_merged_mining_coinbase_transaction?: string | null;

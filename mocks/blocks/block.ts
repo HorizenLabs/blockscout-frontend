@@ -47,7 +47,6 @@ export const base: Block = {
   tx_count: 5,
   tx_fees: '26853607500000000',
   type: 'block',
-  uncles_hashes: [],
 };
 
 export const genesis: Block = {
@@ -83,7 +82,6 @@ export const genesis: Block = {
   tx_count: 0,
   tx_fees: '0',
   type: 'block',
-  uncles_hashes: [],
 };
 
 export const base2: Block = {
