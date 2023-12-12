@@ -30,6 +30,7 @@ export default function generate<R extends Route>(route: R, apiData?: ApiData<R>
       title: title,
       description: pageOgType !== 'Regular page' ? config.meta.og.description : '',
       imageUrl: pageOgType !== 'Regular page' ? config.meta.og.imageUrl : '',
+      url: pageOgType !== 'Regular page' ? config.app.baseUrl : '',
     },
   };
 }
