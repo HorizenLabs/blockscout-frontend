@@ -114,6 +114,7 @@ export type TransactionType = 'rootstock_remasc' |
 'contract_creation' |
 'contract_call' |
 'token_creation' |
-'coin_transfer'
+'coin_transfer' |
+'backward_transfer'
 
 export type TxsResponse = TransactionsResponseValidated | TransactionsResponsePending | BlockTransactionsResponse;
