@@ -51,23 +51,11 @@ export default function useNavItems(): ReturnType {
   return React.useMemo(() => {
     let blockchainNavItems: Array<NavItem> | Array<Array<NavItem>> = [];
 
-    const fwTransfers = {
-      text: 'Forward transfers',
-      nextRoute: { pathname: '/forward-transfers' as const },
-      icon: transactionsIcon,
-      isActive: pathname === '/forward-transfers',
-    };
     const bwTransfers = {
       text: 'Backward transfers',
       nextRoute: { pathname: '/address/[hash]' as const, query: { hash: WITHDRAWAL_REQUEST_CONTRACT_ADDRESS } },
       icon: transactionsIcon,
       isActive: pathname === '/address/[hash]' && query.hash === WITHDRAWAL_REQUEST_CONTRACT_ADDRESS,
-    };
-    const feePayments = {
-      text: 'Fee payments',
-      nextRoute: { pathname: '/fee-payments' as const },
-      icon: transactionsIcon,
-      isActive: pathname === '/fee-payments',
     };
     const topAccounts = !config.UI.views.address.hiddenViews?.top_accounts ? {
       text: 'Top accounts',
@@ -80,12 +68,6 @@ export default function useNavItems(): ReturnType {
       nextRoute: { pathname: '/blocks' as const },
       icon: blocksIcon,
       isActive: (pathname === '/blocks' || pathname === '/block/[height_or_hash]') && !query.tab,
-    };
-    const forkedBlocks = {
-      text: 'Forked blocks (Reorgs)',
-      nextRoute: { pathname: '/blocks' as const, query: { tab: 'reorgs' } },
-      icon: blocksIcon,
-      isActive: pathname === '/blocks' && query.tab === 'reorgs',
     };
     const txs = {
       text: 'Transactions',
@@ -135,12 +117,9 @@ export default function useNavItems(): ReturnType {
       blockchainNavItems = [
         txs,
         blocks,
-        forkedBlocks,
         topAccounts,
         verifiedContracts,
-        fwTransfers,
         bwTransfers,
-        feePayments,
         config.features.beaconChain.isEnabled && {
           text: 'Withdrawals',
           nextRoute: { pathname: '/withdrawals' as const },
