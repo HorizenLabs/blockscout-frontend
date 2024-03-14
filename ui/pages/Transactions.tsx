@@ -115,8 +115,6 @@ const Transactions = () => {
     pagination = txsWatchlistQuery.pagination;
   } else if (router.query.tab === 'backward-transfers') {
     pagination = bwTransfersQuery.pagination;
-  } else {
-    pagination = txsQuery.pagination;
   }
 
   return (
