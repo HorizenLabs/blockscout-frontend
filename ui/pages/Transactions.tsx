@@ -4,6 +4,7 @@ import React from 'react';
 import type { RoutedTab } from 'ui/shared/Tabs/types';
 
 import config from 'configs/app';
+import { WITHDRAWAL_REQUEST_CONTRACT_ADDRESS } from 'lib/consts';
 import useHasAccount from 'lib/hooks/useHasAccount';
 import useIsMobile from 'lib/hooks/useIsMobile';
 import useNewTxsSocket from 'lib/hooks/useNewTxsSocket';
@@ -36,6 +37,19 @@ const Transactions = () => {
         index: 5,
         items_count: 50,
         filter: 'validated',
+      } }),
+    },
+  });
+
+  const bwTransfersQuery = useQueryWithPages({
+    resourceName: 'address_txs',
+    pathParams: { hash: WITHDRAWAL_REQUEST_CONTRACT_ADDRESS },
+    options: {
+      enabled: router.query.tab === 'backward-transfers',
+      placeholderData: generateListStub<'address_txs'>(TX, 50, { next_page_params: {
+        block_number: 9005713,
+        index: 5,
+        items_count: 50,
       } }),
     },
   });
@@ -74,6 +88,21 @@ const Transactions = () => {
         />
       ),
     },
+    {
+      id: 'forward-transfers',
+      title: 'Forward transfers',
+      component: <TxsContent query={ txsQuery }/>,
+    },
+    {
+      id: 'fee-payments',
+      title: 'Fee payments',
+      component: <TxsContent query={ txsQuery }/>,
+    },
+    {
+      id: 'backward-transfers',
+      title: 'Backward transfers',
+      component: <TxsContent query={ bwTransfersQuery }/>,
+    },
     hasAccount ? {
       id: 'watchlist',
       title: 'Watch list',
@@ -81,7 +110,12 @@ const Transactions = () => {
     } : undefined,
   ].filter(Boolean);
 
-  const pagination = router.query.tab === 'watchlist' ? txsWatchlistQuery.pagination : txsQuery.pagination;
+  let pagination = txsQuery.pagination;
+  if (router.query.tab === 'watchlist') {
+    pagination = txsWatchlistQuery.pagination;
+  } else if (router.query.tab === 'backward-transfers') {
+    pagination = bwTransfersQuery.pagination;
+  }
 
   return (
     <>

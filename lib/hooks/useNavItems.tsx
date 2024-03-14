@@ -25,6 +25,7 @@ import transactionsIcon from 'icons/transactions.svg';
 import txnBatchIcon from 'icons/txn_batches.svg';
 import verifiedIcon from 'icons/verified.svg';
 import watchlistIcon from 'icons/watchlist.svg';
+import { WITHDRAWAL_REQUEST_CONTRACT_ADDRESS } from 'lib/consts';
 import { rightLineArrow } from 'lib/html-entities';
 import UserAvatar from 'ui/shared/UserAvatar';
 
@@ -45,10 +46,17 @@ export function isInternalItem(item: NavItem): item is NavItemInternal {
 export default function useNavItems(): ReturnType {
   const router = useRouter();
   const pathname = router.pathname;
+  const query = router.query;
 
   return React.useMemo(() => {
     let blockchainNavItems: Array<NavItem> | Array<Array<NavItem>> = [];
 
+    const bwTransfers = {
+      text: 'Backward transfers',
+      nextRoute: { pathname: '/address/[hash]' as const, query: { hash: WITHDRAWAL_REQUEST_CONTRACT_ADDRESS } },
+      icon: transactionsIcon,
+      isActive: pathname === '/address/[hash]' && query.hash === WITHDRAWAL_REQUEST_CONTRACT_ADDRESS,
+    };
     const topAccounts = !config.UI.views.address.hiddenViews?.top_accounts ? {
       text: 'Top accounts',
       nextRoute: { pathname: '/accounts' as const },
@@ -111,6 +119,7 @@ export default function useNavItems(): ReturnType {
         blocks,
         topAccounts,
         verifiedContracts,
+        bwTransfers,
         config.features.beaconChain.isEnabled && {
           text: 'Withdrawals',
           nextRoute: { pathname: '/withdrawals' as const },
@@ -228,5 +237,5 @@ export default function useNavItems(): ReturnType {
     };
 
     return { mainNavItems, accountNavItems, profileItem };
-  }, [ pathname ]);
+  }, [ pathname, query ]);
 }
