@@ -67,7 +67,7 @@ export default function useNavItems(): ReturnType {
       text: 'Blocks',
       nextRoute: { pathname: '/blocks' as const },
       icon: blocksIcon,
-      isActive: (pathname === '/blocks' || pathname === '/block/[height_or_hash]') && !query.tab,
+      isActive: pathname === '/blocks' || pathname === '/block/[height_or_hash]',
     };
     const txs = {
       text: 'Transactions',
