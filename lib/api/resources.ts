@@ -240,6 +240,10 @@ export const RESOURCES = {
     path: '/api/v2/forward-transfers',
     filterFields: [ 'filter' as const ],
   },
+  fee_payments: {
+    path: '/api/v2/fee-payments',
+    filterFields: [ 'filter' as const ],
+  },
   withdrawals: {
     path: '/api/v2/withdrawals',
     filterFields: [],
@@ -588,7 +592,7 @@ export type PaginatedResources = 'blocks' | 'block_txs' |
 'l2_output_roots' | 'l2_withdrawals' | 'l2_txn_batches' | 'l2_deposits' |
 'zkevm_l2_txn_batches' | 'zkevm_l2_txn_batch_txs' |
 'withdrawals' | 'address_withdrawals' | 'block_withdrawals' |
-'watchlist' | 'private_tags_address' | 'private_tags_tx' | 'forward_transfers';
+'watchlist' | 'private_tags_address' | 'private_tags_tx' | 'forward_transfers' | 'fee_payments';
 
 export type PaginatedResponse<Q extends PaginatedResources> = ResourcePayload<Q>;
 
@@ -632,6 +636,7 @@ Q extends 'tx_token_transfers' ? TokenTransferResponse :
 Q extends 'tx_raw_trace' ? RawTracesResponse :
 Q extends 'tx_state_changes' ? TxStateChanges :
 Q extends 'forward_transfers' ? SpecialTransactionResponse :
+Q extends 'fee_payments' ? SpecialTransactionResponse :
 Q extends 'addresses' ? AddressesResponse :
 Q extends 'address' ? Address :
 Q extends 'address_counters' ? AddressCounters :

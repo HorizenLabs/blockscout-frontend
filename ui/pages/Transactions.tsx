@@ -53,6 +53,18 @@ const Transactions = () => {
     },
   });
 
+  const feePaymentsQuery = useQueryWithPages({
+    resourceName: 'fee_payments',
+    options: {
+      enabled: router.query.tab === 'fee-payments',
+      placeholderData: generateListStub<'fee_payments'>(SPECIAL_TX, 50, { next_page_params: {
+        block_number: 9005713,
+        index: 5,
+        items_count: 50,
+      } }),
+    },
+  });
+
   const bwTransfersQuery = useQueryWithPages({
     resourceName: 'address_txs',
     pathParams: { hash: WITHDRAWAL_REQUEST_CONTRACT_ADDRESS },
@@ -108,7 +120,7 @@ const Transactions = () => {
     {
       id: 'fee-payments',
       title: 'Fee payments',
-      component: <TxsContent query={ txsQuery }/>,
+      component: <TxsContent query={ feePaymentsQuery } isSpecialTxsContent={ true }/>,
     },
     {
       id: 'backward-transfers',
@@ -129,6 +141,8 @@ const Transactions = () => {
     pagination = bwTransfersQuery.pagination;
   } else if (router.query.tab === 'forward-transfers') {
     pagination = fwTransfersQuery.pagination;
+  } else if (router.query.tab === 'fee-payments') {
+    pagination = feePaymentsQuery.pagination;
   }
 
   return (
