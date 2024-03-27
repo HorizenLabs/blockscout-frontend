@@ -1,7 +1,7 @@
 import type { UseQueryResult } from '@tanstack/react-query';
 import React from 'react';
 
-import type { TxsResponse } from 'types/api/transaction';
+import type { SpecialTransactionResponse, TxsResponse } from 'types/api/transaction';
 import type { Sort } from 'types/client/txs-sort';
 
 import type { ResourceError } from 'lib/api/resources';
@@ -15,7 +15,7 @@ type HookResult = UseQueryResult<TxsResponse, ResourceError<unknown>> & {
 }
 
 export default function useTxsSort(
-  queryResult: UseQueryResult<TxsResponse, ResourceError<unknown>>,
+  queryResult: UseQueryResult<TxsResponse | SpecialTransactionResponse, ResourceError<unknown>>,
 ): HookResult {
 
   const [ sorting, setSorting ] = React.useState<Sort>(cookies.get(cookies.NAMES.TXS_SORT) as Sort);
@@ -63,16 +63,16 @@ export default function useTxsSort(
 
   return React.useMemo(() => {
     if (queryResult.isError || queryResult.isPending) {
-      return { ...queryResult, setSortByField, setSortByValue, sorting };
+      return { ...queryResult, setSortByField, setSortByValue, sorting } as HookResult;
     }
 
     return {
       ...queryResult,
-      data: { ...queryResult.data, items: queryResult.data.items.slice().sort(sortTxs(sorting)) },
+      data: { ...queryResult.data, items: queryResult.data.items.slice().sort(sortTxs(sorting)) } as TxsResponse,
       setSortByField,
       setSortByValue,
       sorting,
-    };
+    } as HookResult;
   }, [ queryResult, setSortByField, setSortByValue, sorting ]);
 
 }

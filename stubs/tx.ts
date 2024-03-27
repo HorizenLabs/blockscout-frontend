@@ -1,5 +1,5 @@
 import type { RawTracesResponse } from 'types/api/rawTrace';
-import type { Transaction } from 'types/api/transaction';
+import type { SpecialTransaction, Transaction } from 'types/api/transaction';
 
 import { ADDRESS_PARAMS } from './addressParams';
 
@@ -48,6 +48,15 @@ export const TX: Transaction = {
     14545,
   ],
   tx_tag: null,
+};
+
+export const SPECIAL_TX: SpecialTransaction = {
+  block_hash: '0x3ed9d81e7c1001bdda1caa1dc62c0acbbe3d2c671cdc20dc1e65efdaa4186967',
+  block_number: 9004925,
+  index: 0,
+  to_address: '0x2b824349b320cfa72f292ab26bf525adb00083ba9fa097141896c3c8c74567cc',
+  value: '42000420000000000000',
+  timestamp: '2022-11-11T11:11:11.000000Z',
 };
 
 export const TX_ZKEVM_L2: Transaction = {
