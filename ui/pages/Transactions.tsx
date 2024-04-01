@@ -8,7 +8,7 @@ import { WITHDRAWAL_REQUEST_CONTRACT_ADDRESS } from 'lib/consts';
 import useHasAccount from 'lib/hooks/useHasAccount';
 import useIsMobile from 'lib/hooks/useIsMobile';
 import useNewTxsSocket from 'lib/hooks/useNewTxsSocket';
-import { TX } from 'stubs/tx';
+import { SPECIAL_TX, TX } from 'stubs/tx';
 import { generateListStub } from 'stubs/utils';
 import PageTitle from 'ui/shared/Page/PageTitle';
 import Pagination from 'ui/shared/pagination/Pagination';
@@ -37,6 +37,30 @@ const Transactions = () => {
         index: 5,
         items_count: 50,
         filter: 'validated',
+      } }),
+    },
+  });
+
+  const fwTransfersQuery = useQueryWithPages({
+    resourceName: 'forward_transfers',
+    options: {
+      enabled: router.query.tab === 'forward-transfers',
+      placeholderData: generateListStub<'forward_transfers'>(SPECIAL_TX, 50, { next_page_params: {
+        block_number: 9005713,
+        index: 5,
+        items_count: 50,
+      } }),
+    },
+  });
+
+  const feePaymentsQuery = useQueryWithPages({
+    resourceName: 'fee_payments',
+    options: {
+      enabled: router.query.tab === 'fee-payments',
+      placeholderData: generateListStub<'fee_payments'>(SPECIAL_TX, 50, { next_page_params: {
+        block_number: 9005713,
+        index: 5,
+        items_count: 50,
       } }),
     },
   });
@@ -91,12 +115,12 @@ const Transactions = () => {
     {
       id: 'forward-transfers',
       title: 'Forward transfers',
-      component: <TxsContent query={ txsQuery }/>,
+      component: <TxsContent query={ fwTransfersQuery } isSpecialTxsContent={ true }/>,
     },
     {
       id: 'fee-payments',
       title: 'Fee payments',
-      component: <TxsContent query={ txsQuery }/>,
+      component: <TxsContent query={ feePaymentsQuery } isSpecialTxsContent={ true }/>,
     },
     {
       id: 'backward-transfers',
@@ -115,6 +139,10 @@ const Transactions = () => {
     pagination = txsWatchlistQuery.pagination;
   } else if (router.query.tab === 'backward-transfers') {
     pagination = bwTransfersQuery.pagination;
+  } else if (router.query.tab === 'forward-transfers') {
+    pagination = fwTransfersQuery.pagination;
+  } else if (router.query.tab === 'fee-payments') {
+    pagination = feePaymentsQuery.pagination;
   }
 
   return (

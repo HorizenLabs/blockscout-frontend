@@ -13,14 +13,6 @@ import Sort from 'ui/shared/sort/Sort';
 
 // import TxsFilters from './TxsFilters';
 
-const SORT_OPTIONS: Array<Option<TSort>> = [
-  { title: 'Default', id: undefined },
-  { title: 'Value ascending', id: 'val-asc' },
-  { title: 'Value descending', id: 'val-desc' },
-  { title: 'Fee ascending', id: 'fee-asc' },
-  { title: 'Fee descending', id: 'fee-desc' },
-];
-
 type Props = {
   sorting: TSort;
   setSorting: (val: TSort | undefined) => void;
@@ -29,9 +21,24 @@ type Props = {
   showPagination?: boolean;
   filterComponent?: React.ReactNode;
   linkSlot?: React.ReactNode;
+  isSpecialTxsContent?: boolean;
 }
 
-const TxsHeaderMobile = ({ filterComponent, sorting, setSorting, paginationProps, className, showPagination = true, linkSlot }: Props) => {
+const TxsHeaderMobile = ({ filterComponent, sorting, setSorting, paginationProps,
+  className, showPagination = true, linkSlot, isSpecialTxsContent = false }: Props) => {
+  const SORT_OPTIONS: Array<Option<TSort>> = [
+    { title: 'Default', id: undefined },
+    { title: 'Value ascending', id: 'val-asc' },
+    { title: 'Value descending', id: 'val-desc' },
+  ];
+
+  if (!isSpecialTxsContent) {
+    SORT_OPTIONS.push(
+      { title: 'Fee ascending', id: 'fee-asc' },
+      { title: 'Fee descending', id: 'fee-desc' },
+    );
+  }
+
   return (
     <ActionBar className={ className }>
       <HStack>

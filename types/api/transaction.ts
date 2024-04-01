@@ -14,6 +14,15 @@ export type TransactionRevertReason = {
 type WrappedTransactionFields = 'decoded_input' | 'fee' | 'gas_limit' | 'gas_price' | 'hash' | 'max_fee_per_gas' |
 'max_priority_fee_per_gas' | 'method' | 'nonce' | 'raw_input' | 'to' | 'type' | 'value';
 
+export type SpecialTransaction = {
+  block_hash: string;
+  block_number: number;
+  index: number;
+  to_address: string;
+  value: string;
+  timestamp: string;
+}
+
 export type Transaction = {
   to: AddressParam | null;
   created_contract: AddressParam | null;
@@ -116,5 +125,14 @@ export type TransactionType = 'rootstock_remasc' |
 'token_creation' |
 'coin_transfer' |
 'backward_transfer'
+
+export interface SpecialTransactionResponse {
+  items: Array<SpecialTransaction>;
+  next_page_params: {
+    block_number: number;
+    index: number;
+    items_count: number;
+  } | null;
+}
 
 export type TxsResponse = TransactionsResponseValidated | TransactionsResponsePending | BlockTransactionsResponse;
