@@ -8,6 +8,7 @@ export const HOMEPAGE_STATS: HomeStats = {
     fast: 0.11,
     slow: 0.1,
   },
+  gas_price_rpc: 0.1,
   gas_used_today: '0',
   market_cap: '0',
   network_utilization_percentage: 22.56,

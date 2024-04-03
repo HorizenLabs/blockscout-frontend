@@ -16,7 +16,6 @@ import useApiQuery from 'lib/api/useApiQuery';
 import { WEI } from 'lib/consts';
 import { HOMEPAGE_STATS } from 'stubs/stats';
 
-import StatsGasPrices from './StatsGasPrices';
 import StatsItem from './StatsItem';
 
 const hasGasTracker = config.UI.homepage.showGasTracker;
@@ -52,7 +51,9 @@ const Stats = () => {
     !data.gas_prices && itemsCount--;
     data.rootstock_locked_btc && itemsCount++;
     const isOdd = Boolean(itemsCount % 2);
-    const gasLabel = hasGasTracker && data.gas_prices ? <StatsGasPrices gasPrices={ data.gas_prices }/> : null;
+
+    const gasPriceRpc = data.gas_price_rpc && Number(data.gas_price_rpc).toLocaleString();
+    const gasPriceAverage = data.gas_prices && Number(data.gas_prices.average).toLocaleString();
 
     content = (
       <>
@@ -95,13 +96,12 @@ const Stats = () => {
           _last={ isOdd ? lastItemTouchStyle : undefined }
           isLoading={ isPlaceholderData }
         />
-        { hasGasTracker && data.gas_prices && (
+        { hasGasTracker && (gasPriceAverage || gasPriceAverage) && (
           <StatsItem
             icon={ gasIcon }
             title="Gas tracker"
-            value={ `${ Number(data.gas_prices.average).toLocaleString() } Gwei` }
+            value={ `${ gasPriceRpc || gasPriceAverage } Gwei` }
             _last={ isOdd ? lastItemTouchStyle : undefined }
-            tooltipLabel={ gasLabel }
             isLoading={ isPlaceholderData }
           />
         ) }
