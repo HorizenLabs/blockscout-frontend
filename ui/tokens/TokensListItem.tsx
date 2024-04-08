@@ -87,7 +87,7 @@ const TokensTableItem = ({
       { marketCap && (
         <HStack spacing={ 3 }>
           <Skeleton isLoaded={ !isLoading } fontSize="sm" fontWeight={ 500 }>On-chain market cap</Skeleton>
-          <Skeleton isLoaded={ !isLoading } fontSize="sm" color="text_secondary"><span>{ BigNumber(marketCap).toFormat() }</span></Skeleton>
+          <Skeleton isLoaded={ !isLoading } fontSize="sm" color="text_secondary"><span>{ BigNumber(marketCap).toFormat(2) }</span></Skeleton>
         </HStack>
       ) }
       <HStack spacing={ 3 }>

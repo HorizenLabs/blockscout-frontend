@@ -111,7 +111,7 @@ const TokenDetails = ({ tokenQuery }: Props) => {
           isLoading={ tokenQuery.isPlaceholderData }
         >
           <Skeleton isLoaded={ !tokenQuery.isPlaceholderData } display="inline-block">
-            <span>{ `$${ BigNumber(marketCap).toFormat() }` }</span>
+            <span>{ `$${ BigNumber(marketCap).toFormat(2) }` }</span>
           </Skeleton>
         </DetailsInfoItem>
       ) }
