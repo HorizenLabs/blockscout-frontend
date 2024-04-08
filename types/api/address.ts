@@ -74,7 +74,7 @@ export interface AddressTransactionsResponse {
   } | null;
 }
 
-export interface AddressForwardTransfersResponse {
+export interface AddressSpecialTransactionResponse {
   items: Array<SpecialTransaction>;
   next_page_params: {
     block_number: number;

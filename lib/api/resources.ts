@@ -26,7 +26,7 @@ import type {
   AddressTokensFilter,
   AddressTokensResponse,
   AddressWithdrawalsResponse,
-  AddressForwardTransfersResponse,
+  AddressSpecialTransactionResponse,
 } from 'types/api/address';
 import type { AddressesResponse } from 'types/api/addresses';
 import type { BlocksResponse, BlockTransactionsResponse, Block, BlockFilters, BlockWithdrawalsResponse } from 'types/api/block';
@@ -283,6 +283,11 @@ export const RESOURCES = {
   },
   address_forward_transfers: {
     path: '/api/v2/addresses/:hash/forward-transfers',
+    pathParams: [ 'hash' as const ],
+    filterFields: [ 'filter' as const ],
+  },
+  address_fee_payments: {
+    path: '/api/v2/addresses/:hash/fee-payments',
     pathParams: [ 'hash' as const ],
     filterFields: [ 'filter' as const ],
   },
@@ -589,7 +594,8 @@ export type PaginatedResources = 'blocks' | 'block_txs' |
 'txs_validated' | 'txs_pending' | 'txs_watchlist' | 'txs_execution_node' |
 'tx_internal_txs' | 'tx_logs' | 'tx_token_transfers' | 'tx_state_changes' |
 'addresses' |
-'address_txs' | 'address_forward_transfers' | 'address_internal_txs' | 'address_token_transfers' | 'address_blocks_validated' | 'address_coin_balance' |
+'address_txs' | 'address_forward_transfers' | 'address_fee_payments' | 'address_internal_txs' |
+'address_token_transfers' | 'address_blocks_validated' | 'address_coin_balance' |
 'search' |
 'address_logs' | 'address_tokens' |
 'token_transfers' | 'token_holders' | 'token_inventory' | 'tokens' | 'tokens_bridged' |
@@ -648,7 +654,8 @@ Q extends 'address' ? Address :
 Q extends 'address_counters' ? AddressCounters :
 Q extends 'address_tabs_counters' ? AddressTabsCounters :
 Q extends 'address_txs' ? AddressTransactionsResponse :
-Q extends 'address_forward_transfers' ? AddressForwardTransfersResponse :
+Q extends 'address_forward_transfers' ? AddressSpecialTransactionResponse :
+Q extends 'address_fee_payments' ? AddressSpecialTransactionResponse :
 Q extends 'address_internal_txs' ? AddressInternalTxsResponse :
 Q extends 'address_token_transfers' ? AddressTokenTransferResponse :
 Q extends 'address_blocks_validated' ? AddressBlocksValidatedResponse :

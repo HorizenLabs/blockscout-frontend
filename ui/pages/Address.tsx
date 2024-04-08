@@ -17,9 +17,9 @@ import AddressBlocksValidated from 'ui/address/AddressBlocksValidated';
 import AddressCoinBalance from 'ui/address/AddressCoinBalance';
 import AddressContract from 'ui/address/AddressContract';
 import AddressDetails from 'ui/address/AddressDetails';
-import AddressForwardTransfers from 'ui/address/AddressForwardTransfers';
 import AddressInternalTxs from 'ui/address/AddressInternalTxs';
 import AddressLogs from 'ui/address/AddressLogs';
+import AddressSpecialTransfers from 'ui/address/AddressSpecialTransfers';
 import AddressTokens from 'ui/address/AddressTokens';
 import AddressTokenTransfers from 'ui/address/AddressTokenTransfers';
 import AddressTxs from 'ui/address/AddressTxs';
@@ -109,7 +109,12 @@ const AddressPageContent = () => {
       {
         id: 'forward_transfers',
         title: 'Forward Transfers',
-        component: <AddressForwardTransfers/>,
+        component: <AddressSpecialTransfers resource="forward_transfers"/>,
+      },
+      {
+        id: 'fee_payments',
+        title: 'Fee Payments',
+        component: <AddressSpecialTransfers resource="fee_payments"/>,
       },
       {
         id: 'coin_balance_history',

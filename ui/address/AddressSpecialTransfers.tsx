@@ -25,9 +25,10 @@ const OVERLOAD_COUNT = 75;
 type Props = {
   scrollRef?: React.RefObject<HTMLDivElement>;
   overloadCount?: number;
+  resource: 'forward_transfers' | 'fee_payments';
 }
 
-const AddressForwardTransfers = ({ scrollRef, overloadCount = OVERLOAD_COUNT }: Props) => {
+const AddressSpecialTransfers = ({ scrollRef, overloadCount = OVERLOAD_COUNT, resource }: Props) => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -38,11 +39,11 @@ const AddressForwardTransfers = ({ scrollRef, overloadCount = OVERLOAD_COUNT }: 
   const currentAddress = getQueryParamString(router.query.hash);
 
   const addressTxsQuery = useQueryWithPages({
-    resourceName: 'address_forward_transfers',
+    resourceName: `address_${ resource }`,
     pathParams: { hash: currentAddress },
     scrollRef,
     options: {
-      placeholderData: generateListStub<'address_forward_transfers'>(SPECIAL_TX, 50, { next_page_params: {
+      placeholderData: generateListStub<`address_${ typeof resource }`>(SPECIAL_TX, 50, { next_page_params: {
         block_number: 9005713,
         index: 5,
         items_count: 50,
@@ -149,4 +150,4 @@ const AddressForwardTransfers = ({ scrollRef, overloadCount = OVERLOAD_COUNT }: 
   );
 };
 
-export default AddressForwardTransfers;
+export default AddressSpecialTransfers;
