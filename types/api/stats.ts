@@ -8,6 +8,7 @@ export type HomeStats = {
   transactions_today: string;
   gas_used_today: string;
   gas_prices: GasPrices | null;
+  gas_price_rpc: number | null;
   static_gas_price: string | null;
   market_cap: string;
   network_utilization_percentage: number;

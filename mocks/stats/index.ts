@@ -8,6 +8,7 @@ export const base: HomeStats = {
     fast: 67.5,
     slow: 48.0,
   },
+  gas_price_rpc: 48.0,
   gas_used_today: '4108680603',
   market_cap: '330809.96443288102524',
   network_utilization_percentage: 1.55372064,
