@@ -33,8 +33,6 @@ const SpecialTxsListItem = ({ tx, isLoading, showBlockInfo, currentAddress, enab
 
   const isIn = Boolean(currentAddress && currentAddress === tx.to_address);
 
-  tx.timestamp = '2024-03-27T11:58:24.000000Z';
-
   const timeAgo = useTimeAgoIncrement(tx.timestamp, enableTimeIncrement);
 
   return (

@@ -30,9 +30,6 @@ const SpecialTxsTableItem = ({ tx, showBlockInfo, currentAddress, enableTimeIncr
   };
   const isIn = Boolean(currentAddress && currentAddress === dataTo?.hash);
 
-  // TBD: Timestamp needs to come from the API, this is just a placeholder
-  tx.timestamp = '2024-03-27T11:58:24.000000Z';
-
   const timeAgo = useTimeAgoIncrement(tx.timestamp, enableTimeIncrement);
 
   const addressTo = dataTo ? (
