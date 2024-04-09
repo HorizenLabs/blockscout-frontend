@@ -115,12 +115,12 @@ const Transactions = () => {
     {
       id: 'forward-transfers',
       title: 'Forward transfers',
-      component: <TxsContent query={ fwTransfersQuery } isSpecialTxsContent={ true }/>,
+      component: <TxsContent query={ fwTransfersQuery } isSpecialTxsContent={ true } showSocketInfo={ false }/>,
     },
     {
       id: 'fee-payments',
       title: 'Fee payments',
-      component: <TxsContent query={ feePaymentsQuery } isSpecialTxsContent={ true }/>,
+      component: <TxsContent query={ feePaymentsQuery } isSpecialTxsContent={ true } showSocketInfo={ false }/>,
     },
     {
       id: 'backward-transfers',
