@@ -19,6 +19,7 @@ import AddressContract from 'ui/address/AddressContract';
 import AddressDetails from 'ui/address/AddressDetails';
 import AddressInternalTxs from 'ui/address/AddressInternalTxs';
 import AddressLogs from 'ui/address/AddressLogs';
+import AddressSpecialTransfers from 'ui/address/AddressSpecialTransfers';
 import AddressTokens from 'ui/address/AddressTokens';
 import AddressTokenTransfers from 'ui/address/AddressTokenTransfers';
 import AddressTxs from 'ui/address/AddressTxs';
@@ -104,6 +105,16 @@ const AddressPageContent = () => {
         title: 'Internal txns',
         count: addressTabsCountersQuery.data?.internal_txs_count,
         component: <AddressInternalTxs scrollRef={ tabsScrollRef }/>,
+      },
+      {
+        id: 'forward_transfers',
+        title: 'Forward Transfers',
+        component: <AddressSpecialTransfers resource="forward_transfers"/>,
+      },
+      {
+        id: 'fee_payments',
+        title: 'Fee Payments',
+        component: <AddressSpecialTransfers resource="fee_payments"/>,
       },
       {
         id: 'coin_balance_history',

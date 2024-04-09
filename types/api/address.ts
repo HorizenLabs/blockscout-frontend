@@ -1,4 +1,4 @@
-import type { Transaction } from 'types/api/transaction';
+import type { Transaction, SpecialTransaction } from 'types/api/transaction';
 
 import type { UserTags } from './addressParams';
 import type { Block } from './block';
@@ -67,6 +67,15 @@ export interface AddressTokensBalancesSocketMessage {
 
 export interface AddressTransactionsResponse {
   items: Array<Transaction>;
+  next_page_params: {
+    block_number: number;
+    index: number;
+    items_count: number;
+  } | null;
+}
+
+export interface AddressSpecialTransactionResponse {
+  items: Array<SpecialTransaction>;
   next_page_params: {
     block_number: number;
     index: number;
