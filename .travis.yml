@@ -1,0 +1,21 @@
+os: linux
+dist: jammy
+language: generic
+services:
+  - docker
+
+git:
+  depth: false
+
+env:
+  global:
+    - DOCKER_IMAGE_NAME=zencash/blockscout-frontend
+
+before_script:
+  - source ci/setup_env.sh
+
+jobs:
+  include:
+    - name: release_image
+      script: ci/script.sh
+      env:
