@@ -30,10 +30,10 @@ if [ "${have_docker}" = "false" ]; then
   fn_die "Docker is not installed. Exiting ..."
 fi
 
-# echo "=== Checking if GITHUB_TOKEN is set ==="
-# if [ -z "${GITHUB_TOKEN:-}" ]; then
-#   fn_die "GITHUB_TOKEN variable is not set. Exiting ..."
-# fi
+echo "=== Checking if GITHUB_TOKEN is set ==="
+if [ -z "${GITHUB_TOKEN:-}" ]; then
+  fn_die "GITHUB_TOKEN variable is not set. Exiting ..."
+fi
 
 echo "=== Checking if DOCKER_WRITER_PASSWORD is set ==="
 if [ -z "${DOCKER_WRITER_PASSWORD:-}" ]; then
@@ -44,9 +44,6 @@ echo "=== Checking if DOCKER_WRITER_USERNAME is set ==="
 if [ -z "${DOCKER_WRITER_USERNAME:-}" ]; then
   fn_die "DOCKER_WRITER_USERNAME variable is not set. Exiting ..."
 fi
-
-# TESTS: TBD - Add tests here
-# echo "=== Running tests ==="
 
 docker_tag=""
 if [ "${IS_A_RELEASE}" = "true" ]; then
