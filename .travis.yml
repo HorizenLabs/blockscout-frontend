@@ -9,7 +9,7 @@ git:
 
 env:
   global:
-    - DOCKER_IMAGE_NAME=zencash/blockscout-frontend
+    - DOCKER_IMAGE_NAME=horizenlabs/blockscout-frontend
 
 before_script:
   - source ci/setup_env.sh

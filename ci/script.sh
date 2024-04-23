@@ -5,12 +5,9 @@ source ./tempEnv.sh
 set -eEuo pipefail
 
 echo "=== Local variables ==="
-ENABLE_LOGS="${ENABLE_LOGS:-true}"
-ALLOW_AUDIT_FAILURES="${ALLOW_AUDIT_FAILURES:-false}"
-ALLOW_TEST_FAILURES="${ALLOW_TEST_FAILURES:-false}"
-PROD_RELEASE_BRANCH="${PROD_RELEASE_BRANCH:-master}"
+PROD_RELEASE_BRANCH="${PROD_RELEASE_BRANCH:-main}"
 DEV_RELEASE_BRANCH="${DEV_RELEASE_BRANCH:-development}"
-DOCKER_IMAGE_NAME="${DOCKER_IMAGE_NAME:-zencash/blockscout-frontend}"
+DOCKER_IMAGE_NAME="${DOCKER_IMAGE_NAME:-horizenlabs/blockscout-frontend}"
 
 # absolute path to project from relative location of this script
 workdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." &> /dev/null && pwd )"
@@ -48,22 +45,28 @@ fi
 docker_tag=""
 if [ "${IS_A_RELEASE}" = "true" ]; then
   docker_tag="${TRAVIS_TAG}"
+  # Build both versioned and latest tag on release
+  docker_tags="${TRAVIS_TAG},latest"
 elif [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
   if [ "${TRAVIS_BRANCH}" = "${PROD_RELEASE_BRANCH}" ]; then
     docker_tag=latest
   elif [ "${TRAVIS_BRANCH}" = "${DEV_RELEASE_BRANCH}" ]; then
     docker_tag=dev
   fi
+  docker_tags="${docker_tag}"
 fi
-echo "=== Docker tag: ${docker_tag} ==="
+echo "=== Docker tag(s) set to: ${docker_tags} ==="
 
 if [ "${docker_tag}" = "" ]; then
   echo "" && echo "=== Feature branch, no Docker image is generated ===" && echo ""
 else
-  echo "" && echo "=== Building and publishing docker image ===" && echo ""
+  echo "" && echo "=== Building and publishing docker image(s) ===" && echo ""
   echo "$DOCKER_WRITER_PASSWORD" | docker login -u "$DOCKER_WRITER_USERNAME" --password-stdin
-  docker build --build-arg GIT_COMMIT_SHA=$(git rev-parse --short HEAD) --build-arg GIT_TAG=$(git describe --tags --abbrev=0) -t "${DOCKER_IMAGE_NAME}:${docker_tag}" ../
-  docker push "${DOCKER_IMAGE_NAME}:${docker_tag}"
+  IFS=',' read -ra TAGS <<< "${docker_tags}"
+  for tag in "${TAGS[@]}"; do
+    docker build --build-arg GIT_COMMIT_SHA=$(git rev-parse --short HEAD) --build-arg GIT_TAG=$(git describe --tags --abbrev=0) -t "${DOCKER_IMAGE_NAME}:${tag}" ../
+    docker push "${DOCKER_IMAGE_NAME}:${tag}"
+  done
 fi
 
 # If a release push Release to GitHub

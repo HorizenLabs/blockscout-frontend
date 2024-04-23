@@ -1,8 +1,8 @@
 #!/bin/bash
-set -eo pipefail
+set -eEo pipefail
 
 IS_A_RELEASE="false"
-export PROD_RELEASE_BRANCH="${PROD_RELEASE_BRANCH:-master}"
+export PROD_RELEASE_BRANCH="${PROD_RELEASE_BRANCH:-main}"
 
 if [ -z "${TRAVIS_TAG}" ]; then
   echo "TRAVIS_TAG:                     No TAG"
@@ -72,8 +72,6 @@ if [ -n "${TRAVIS_TAG}" ]; then
   fi
 
   if ( git branch -r --contains "${TRAVIS_TAG}" | grep -xqE ". origin\/${PROD_RELEASE_BRANCH}$" ); then
-
-    export IS_A_RELEASE="true"
 
     import_gpg_keys "${PROD_MAINTAINERS_KEYS}"
 
