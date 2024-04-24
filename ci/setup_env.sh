@@ -3,6 +3,8 @@ set -eEo pipefail
 
 IS_A_RELEASE="false"
 export PROD_RELEASE_BRANCH="${PROD_RELEASE_BRANCH:-main}"
+export DEV_RELEASE_BRANCH="${DEV_RELEASE_BRANCH:-development}"
+
 
 if [ -z "${TRAVIS_TAG}" ]; then
   echo "TRAVIS_TAG:                     No TAG"
@@ -92,10 +94,22 @@ if [ -n "${TRAVIS_TAG}" ]; then
   fi
 fi
 
+if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
+  if [ "${TRAVIS_BRANCH}" = "${PROD_RELEASE_BRANCH}" ]; then
+    export IS_A_PROD_BUILD="true"
+  elif [ "${TRAVIS_BRANCH}" = "${DEV_RELEASE_BRANCH}" ]; then
+    export IS_A_DEV_BUILD="true"
+  fi
+fi
+
 # Final check for release vs non-release build
 if [ "${IS_A_RELEASE}" = "false" ]; then
   echo "" && echo "=== NOT a release build ===" && echo ""
   export IS_A_RELEASE="false"
+elif [ "${IS_A_PROD_BUILD}" = "true" ]; then
+  echo "" && echo "=== Production build ===" && echo ""
+elif [ "${IS_A_DEV_BUILD}" = "true" ]; then
+  echo "" && echo "=== Development build ===" && echo ""
 fi
 
 set +eo pipefail

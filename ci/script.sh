@@ -7,6 +7,8 @@ set -eEuo pipefail
 echo "=== Local variables ==="
 PROD_RELEASE_BRANCH="${PROD_RELEASE_BRANCH:-main}"
 DEV_RELEASE_BRANCH="${DEV_RELEASE_BRANCH:-development}"
+IS_A_PROD_BUILD="${IS_A_PROD_BUILD:-false}"
+IS_A_DEV_BUILD="${IS_A_DEV_BUILD:-false}"
 DOCKER_IMAGE_NAME="${DOCKER_IMAGE_NAME:-horizenlabs/blockscout-frontend}"
 
 # absolute path to project from relative location of this script
@@ -42,22 +44,20 @@ if [ -z "${DOCKER_WRITER_USERNAME:-}" ]; then
   fn_die "DOCKER_WRITER_USERNAME variable is not set. Exiting ..."
 fi
 
-docker_tag=""
+
+docker_tags=""
+
 if [ "${IS_A_RELEASE}" = "true" ]; then
-  docker_tag="${TRAVIS_TAG}"
-  # Build both versioned and latest tag on release
   docker_tags="${TRAVIS_TAG},latest"
-elif [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
-  if [ "${TRAVIS_BRANCH}" = "${PROD_RELEASE_BRANCH}" ]; then
-    docker_tag=latest
-  elif [ "${TRAVIS_BRANCH}" = "${DEV_RELEASE_BRANCH}" ]; then
-    docker_tag=dev
-  fi
-  docker_tags="${docker_tag}"
+elif [ "${IS_A_PROD_BUILD}" = "true" ]; then
+  docker_tags="latest"
+elif [ "${IS_A_DEV_BUILD}" = "true" ]; then
+  docker_tags="dev"
 fi
+
 echo "=== Docker tag(s) set to: ${docker_tags} ==="
 
-if [ "${docker_tag}" = "" ]; then
+if [ -z "${docker_tags}" ]; then
   echo "" && echo "=== Feature branch, no Docker image is generated ===" && echo ""
 else
   echo "" && echo "=== Building and publishing docker image(s) ===" && echo ""
