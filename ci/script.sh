@@ -1,7 +1,5 @@
 #!/bin/bash
 
-source ./tempEnv.sh
-
 set -eEuo pipefail
 
 echo "=== Local variables ==="
