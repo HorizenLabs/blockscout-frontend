@@ -62,7 +62,7 @@ else
   echo "$DOCKER_WRITER_PASSWORD" | docker login -u "$DOCKER_WRITER_USERNAME" --password-stdin
   IFS=',' read -ra TAGS <<< "${docker_tags}"
   for tag in "${TAGS[@]}"; do
-    docker build --build-arg GIT_COMMIT_SHA=$(git rev-parse --short HEAD) --build-arg GIT_TAG=$(git describe --tags --abbrev=0) -t "${DOCKER_IMAGE_NAME}:${tag}" ../
+    docker build --build-arg GIT_COMMIT_SHA=$(git rev-parse --short HEAD) --build-arg GIT_TAG=$(git describe --tags --abbrev=0) -t "${DOCKER_IMAGE_NAME}:${tag}" .
     docker push "${DOCKER_IMAGE_NAME}:${tag}"
   done
 fi
