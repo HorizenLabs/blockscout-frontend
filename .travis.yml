@@ -13,9 +13,7 @@ env:
     - DOCKER_BUILDKIT=1
 
 before_install:
-  - docker build --platform=local -o . git://github.com/docker/buildx
-  - mkdir -p ~/.docker/cli-plugins
-  - mv buildx ~/.docker/cli-plugins/docker-buildx
+  - apt install docker-buildx-plugin
 
 before_script:
   - source ci/setup_env.sh
