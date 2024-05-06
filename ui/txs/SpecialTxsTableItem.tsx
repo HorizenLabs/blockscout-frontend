@@ -75,7 +75,7 @@ const SpecialTxsTableItem = ({ tx, showBlockInfo, currentAddress, enableTimeIncr
         { addressTo }
       </Td>
       <Td isNumeric>
-        <CurrencyValue value={ tx.value } accuracy={ 8 } isLoading={ isLoading }/>
+        <CurrencyValue value={ tx.value } accuracy={ 18 } wordBreak="break-word" isLoading={ isLoading }/>
       </Td>
     </Tr>
   );
