@@ -44,7 +44,7 @@ fi
 
 
 docker_tags=""
-
+IS_A_DEV_BUILD="true"
 if [ "${IS_A_RELEASE}" = "true" ]; then
   docker_tags="${TRAVIS_TAG},latest"
 elif [ "${IS_A_PROD_BUILD}" = "true" ]; then
