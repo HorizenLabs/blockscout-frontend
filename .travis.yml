@@ -10,6 +10,10 @@ git:
 env:
   global:
     - DOCKER_IMAGE_NAME=horizenlabs/blockscout-frontend
+    - DOCKER_BUILDKIT=1
+
+before_install:
+  - ci/setup_docker.sh
 
 before_script:
   - source ci/setup_env.sh
