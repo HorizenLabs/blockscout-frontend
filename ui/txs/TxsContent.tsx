@@ -1,4 +1,5 @@
 import { Box, Show, Hide } from '@chakra-ui/react';
+import router from 'next/router';
 import React from 'react';
 
 import type { AddressFromToFilter } from 'types/api/address';
@@ -145,11 +146,23 @@ const TxsContent = ({
     />
   ) : null;
 
+  const getEmptyText = () => {
+    const currentTab = router.query.tab;
+    switch (currentTab) {
+      case 'forward_transfers':
+        return 'There are no forward transfers.';
+      case 'fee_payments':
+        return 'There are no fee payments.';
+      default:
+        return 'There are no transactions.';
+    }
+  };
+
   return (
     <DataListDisplay
       isError={ isError }
       items={ data?.items }
-      emptyText="There are no transactions."
+      emptyText={ getEmptyText() }
       content={ content }
       actionBar={ actionBar }
     />
