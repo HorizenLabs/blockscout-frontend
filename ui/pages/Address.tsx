@@ -106,16 +106,16 @@ const AddressPageContent = () => {
         count: addressTabsCountersQuery.data?.internal_txs_count,
         component: <AddressInternalTxs scrollRef={ tabsScrollRef }/>,
       },
-      {
+      !addressQuery.data?.is_contract ? {
         id: 'forward_transfers',
         title: 'Forward Transfers',
         component: <AddressSpecialTransfers resource="forward_transfers"/>,
-      },
-      {
+      } : undefined,
+      !addressQuery.data?.is_contract ? {
         id: 'fee_payments',
         title: 'Fee Payments',
         component: <AddressSpecialTransfers resource="fee_payments"/>,
-      },
+      } : undefined,
       {
         id: 'coin_balance_history',
         title: 'Coin balance history',
