@@ -5,6 +5,9 @@ IS_A_RELEASE="false"
 export PROD_RELEASE_BRANCH="${PROD_RELEASE_BRANCH:-main}"
 export DEV_RELEASE_BRANCH="${DEV_RELEASE_BRANCH:-development}"
 
+PACKAGE_JSON_VERSION=$(jq -r '.version' "${TRAVIS_BUILD_DIR}/package.json")
+
+echo "package.json version:           ${PACKAGE_JSON_VERSION}"
 
 if [ -z "${TRAVIS_TAG}" ]; then
   echo "TRAVIS_TAG:                     No TAG"
@@ -66,8 +69,7 @@ touch "${HOME}/key.asc"
 
 # Checking if it a release build
 if [ -n "${TRAVIS_TAG}" ]; then
-
-  check_versions_match "${TRAVIS_TAG}" "${mix_version_tag}"
+  check_versions_match "${PACKAGE_JSON_VERSION}" "${TRAVIS_TAG}"
 
   if [ -z "${PROD_MAINTAINERS_KEYS:-}" ]; then
     echo "Warning: PROD_MAINTAINERS_KEYS variable is not set. Make sure to set it up for PROD|DEV release build !!!"
