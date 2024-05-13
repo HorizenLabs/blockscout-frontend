@@ -38,6 +38,10 @@ const ContractRead = ({ addressHash, isProxy, isCustomAbi }: Props) => {
     },
   });
 
+  const filteredData = data?.filter((item) => (
+    item.stateMutability === 'view' || item?.constant
+  )) || [];
+
   const handleMethodFormSubmit = React.useCallback(async(item: SmartContractReadMethod, args: Array<string | Array<unknown>>) => {
     return apiFetch<'contract_method_query', SmartContractQueryMethodRead>('contract_method_query', {
       pathParams: { hash: addressHash },
@@ -87,7 +91,7 @@ const ContractRead = ({ addressHash, isProxy, isCustomAbi }: Props) => {
     return <ContentLoader/>;
   }
 
-  if (data.length === 0 && !isProxy) {
+  if (filteredData.length === 0 && !isProxy) {
     return <span>No public read functions were found for this contract.</span>;
   }
 
@@ -96,7 +100,7 @@ const ContractRead = ({ addressHash, isProxy, isCustomAbi }: Props) => {
       { isCustomAbi && <ContractCustomAbiAlert/> }
       { account && <ContractConnectWallet/> }
       { isProxy && <ContractImplementationAddress hash={ addressHash }/> }
-      <ContractMethodsAccordion data={ data } addressHash={ addressHash } renderItemContent={ renderItemContent }/>
+      <ContractMethodsAccordion data={ filteredData } addressHash={ addressHash } renderItemContent={ renderItemContent }/>
     </>
   );
 };
