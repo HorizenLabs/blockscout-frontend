@@ -67,11 +67,13 @@ const TxsContent = ({
               isLoading={ isPlaceholderData }
             />
           ) }
-          { data.items.map((tx, index) => (
-            isSpecialTxsContent ? (
+          { data.items.map((tx, index) => {
+            const castedTx = tx as unknown as SpecialTransaction;
+
+            return isSpecialTxsContent ? (
               <SpecialTxsListItem
-                key={ tx.hash + (isPlaceholderData ? index : '') }
-                tx={ tx as unknown as SpecialTransaction }
+                key={ castedTx.block_hash + (isPlaceholderData ? index : castedTx.index) }
+                tx={ castedTx }
                 showBlockInfo={ showBlockInfo }
                 currentAddress={ currentAddress }
                 enableTimeIncrement={ enableTimeIncrement }
@@ -86,8 +88,8 @@ const TxsContent = ({
                 enableTimeIncrement={ enableTimeIncrement }
                 isLoading={ isPlaceholderData }
               />
-            )
-          )) }
+            );
+          }) }
         </Box>
       </Show>
       <Hide below="lg" ssr={ false }>
