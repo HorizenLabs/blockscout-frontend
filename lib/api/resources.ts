@@ -57,7 +57,7 @@ import type { TokensResponse, TokensFilters, TokensSorting, TokenInstanceTransfe
 import type { TokenTransferResponse, TokenTransferFilters } from 'types/api/tokenTransfer';
 import type { TransactionsResponseValidated, TransactionsResponsePending, Transaction,
   TransactionsResponseWatchlist, SpecialTransactionResponse } from 'types/api/transaction';
-import type { TTxsFilters } from 'types/api/txsFilters';
+import type { FeePaymentsFilters, TTxsFilters } from 'types/api/txsFilters';
 import type { TxStateChanges } from 'types/api/txStateChanges';
 import type { VisualizedContract } from 'types/api/visualization';
 import type { WithdrawalsResponse, WithdrawalsCounters } from 'types/api/withdrawals';
@@ -243,7 +243,7 @@ export const RESOURCES = {
   },
   fee_payments: {
     path: '/api/v2/fee-payments',
-    filterFields: [ 'filter' as const ],
+    filterFields: [ 'value_from_mainchain' as const ],
   },
   withdrawals: {
     path: '/api/v2/withdrawals',
@@ -719,6 +719,7 @@ Q extends 'search' ? SearchResultFilters :
 Q extends 'tokens' ? TokensFilters :
 Q extends 'tokens_bridged' ? TokensBridgedFilters :
 Q extends 'verified_contracts' ? VerifiedContractsFilters :
+Q extends 'fee_payments' ? FeePaymentsFilters :
 never;
 /* eslint-enable @typescript-eslint/indent */
 

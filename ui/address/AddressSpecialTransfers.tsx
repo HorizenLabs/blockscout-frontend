@@ -15,7 +15,7 @@ import AddressCsvExportLink from './AddressCsvExportLink';
 type Props = {
   scrollRef?: React.RefObject<HTMLDivElement>;
   overloadCount?: number;
-  resource: 'forward_transfers' | 'fee_payments';
+  resource: 'forward_transfers' | 'fee_payments' | 'fee_payments_from_mainchain';
 }
 
 const AddressSpecialTransfers = ({ scrollRef, resource }: Props) => {
@@ -24,12 +24,28 @@ const AddressSpecialTransfers = ({ scrollRef, resource }: Props) => {
   const isMobile = useIsMobile();
   const currentAddress = getQueryParamString(router.query.hash);
 
+  const addressResource = resource === 'fee_payments' ? 'fee_payments' : 'forward_transfers';
+
   const addressTxsQuery = useQueryWithPages({
-    resourceName: `address_${ resource }`,
+    resourceName: `address_${ addressResource }`,
     pathParams: { hash: currentAddress },
     scrollRef,
     options: {
-      placeholderData: generateListStub<`address_${ typeof resource }`>(SPECIAL_TX, 50, { next_page_params: {
+      placeholderData: generateListStub<`address_${ typeof addressResource }`>(SPECIAL_TX, 50, { next_page_params: {
+        block_number: 9005713,
+        index: 5,
+        items_count: 50,
+      } }),
+      enabled: resource !== 'fee_payments_from_mainchain',
+    },
+  });
+
+  const feePaymentsFromMainchainQuery = useQueryWithPages({
+    resourceName: 'fee_payments',
+    filters: { value_from_mainchain: 'true' },
+    options: {
+      enabled: resource === 'fee_payments_from_mainchain',
+      placeholderData: generateListStub<'fee_payments'>(SPECIAL_TX, 50, { next_page_params: {
         block_number: 9005713,
         index: 5,
         items_count: 50,
@@ -37,12 +53,14 @@ const AddressSpecialTransfers = ({ scrollRef, resource }: Props) => {
     },
   });
 
+  const activeQuery = resource === 'fee_payments_from_mainchain' ? feePaymentsFromMainchainQuery : addressTxsQuery;
+
   const csvExportLink = (
     <AddressCsvExportLink
       address={ currentAddress }
       params={{ type: 'transactions' }}
       ml="auto"
-      isLoading={ addressTxsQuery.pagination.isLoading }
+      isLoading={ activeQuery.pagination.isLoading }
     />
   );
 
@@ -51,11 +69,11 @@ const AddressSpecialTransfers = ({ scrollRef, resource }: Props) => {
       { !isMobile && (
         <ActionBar mt={ -6 }>
           { currentAddress && csvExportLink }
-          <Pagination { ...addressTxsQuery.pagination } ml={ 8 }/>
+          <Pagination { ...activeQuery.pagination } ml={ 8 }/>
         </ActionBar>
       ) }
       <TxsContent
-        query={ addressTxsQuery }
+        query={ activeQuery }
         currentAddress={ typeof currentAddress === 'string' ? currentAddress : undefined }
         enableTimeIncrement
         showSocketInfo={ false }
