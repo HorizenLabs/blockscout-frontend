@@ -21,11 +21,11 @@ Alternatively, you can build your own docker image and run your app from that. P
 For more information on migrating from the previous frontend, please see the [frontend migration docs](https://docs.blockscout.com/for-developers/frontend-migration).
 
 ## Running locally in dev mode
-Place an env file inside `/config/envs/.env.local`. Make sure the env file has a port number set: `NEXT_PUBLIC_APP_PORT=8000`.
+Place an env file inside `/config/envs/.env.local`. Make sure the env file has a port number set: `NEXT_PUBLIC_APP_PORT=3000`.
 
 `.env.pregobi`, `.env.gobi`, or `.env.eon` can be used as a template.
 
-Run `yarn dev:preset local`. The app will run on port 8000, as set in the env file.
+Run `yarn dev:preset local`. The app will run on port 3000, as set in the env file.
 
 ## Contributing
 
