@@ -23,7 +23,7 @@ For more information on migrating from the previous frontend, please see the [fr
 ## Running locally in dev mode
 Place an env file inside `/config/envs/.env.local`. Make sure the env file has a port number set: `NEXT_PUBLIC_APP_PORT=8000`
 
-Run `yarn dev:preset localhost`. The app will run on port 8000, as set in the env variable.
+Run `yarn dev:preset local`. The app will run on port 8000, as set in the env variable.
 
 ## Contributing
 
