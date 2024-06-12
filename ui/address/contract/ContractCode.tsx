@@ -242,7 +242,8 @@ const ContractCode = ({ addressHash, noSocket }: Props) => {
             isLoading={ isPlaceholderData }
           />
         ) }
-        { data?.source_code && (
+        { /* source_code is '/' for all native smart contracts */ }
+        { data?.source_code && data?.source_code !== '/' && (
           <ContractSourceCode
             address={ addressHash }
             implementationAddress={ addressInfo?.implementation_address ?? undefined }
@@ -279,7 +280,8 @@ const ContractCode = ({ addressHash, noSocket }: Props) => {
             isLoading={ isPlaceholderData }
           />
         ) }
-        { data?.deployed_bytecode && (
+        { /* deployed_bytecode is '0x2f' for all native smart contracts */ }
+        { data?.deployed_bytecode && data?.deployed_bytecode !== '0x2f' && (
           <RawDataSnippet
             data={ data.deployed_bytecode }
             title="Deployed ByteCode"
