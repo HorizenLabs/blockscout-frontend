@@ -57,6 +57,18 @@ export default function useNavItems(): ReturnType {
       icon: transactionsIcon,
       isActive: pathname === '/address/[hash]' && query.hash === WITHDRAWAL_REQUEST_CONTRACT_ADDRESS,
     };
+    const forwardTransfers = {
+      text: 'Forward transfers',
+      nextRoute: { pathname: '/txs' as const, query: { tab: 'forward-transfers' } },
+      icon: transactionsIcon,
+      isActive: pathname === '/txs' && query.tab === 'forward-transfers',
+    };
+    const feePayments = {
+      text: 'Fee payments',
+      nextRoute: { pathname: '/txs' as const, query: { tab: 'fee-payments' } },
+      icon: transactionsIcon,
+      isActive: pathname === '/txs' && query.tab === 'fee-payments',
+    };
     const topAccounts = !config.UI.views.address.hiddenViews?.top_accounts ? {
       text: 'Top accounts',
       nextRoute: { pathname: '/accounts' as const },
@@ -73,7 +85,7 @@ export default function useNavItems(): ReturnType {
       text: 'Transactions',
       nextRoute: { pathname: '/txs' as const },
       icon: transactionsIcon,
-      isActive: pathname === '/txs' || pathname === '/tx/[hash]',
+      isActive: (pathname === '/txs' && query.tab !== 'fee-payments' && query.tab !== 'forward-transfers') || pathname === '/tx/[hash]',
     };
     const verifiedContracts =
     // eslint-disable-next-line max-len
@@ -120,6 +132,8 @@ export default function useNavItems(): ReturnType {
         topAccounts,
         verifiedContracts,
         bwTransfers,
+        forwardTransfers,
+        feePayments,
         config.features.beaconChain.isEnabled && {
           text: 'Withdrawals',
           nextRoute: { pathname: '/withdrawals' as const },
