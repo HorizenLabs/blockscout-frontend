@@ -19,6 +19,7 @@ import LinkInternal from 'ui/shared/LinkInternal';
 import RawDataSnippet from 'ui/shared/RawDataSnippet';
 
 import ContractSourceCode from './ContractSourceCode';
+import { isNativeSmartContract } from './utils';
 
 type Props = {
   addressHash?: string;
@@ -181,7 +182,7 @@ const ContractCode = ({ addressHash, noSocket }: Props) => {
           </Skeleton>
         ) }
         { verificationAlert }
-        { (data?.is_changed_bytecode || isChangedBytecodeSocket) && (
+        { (data?.is_changed_bytecode || isChangedBytecodeSocket) && !isNativeSmartContract(addressHash) && (
           <Alert status="warning">
             Warning! Contract bytecode has been changed and does not match the verified one. Therefore, interaction with this smart contract may be risky.
           </Alert>
@@ -242,7 +243,7 @@ const ContractCode = ({ addressHash, noSocket }: Props) => {
             isLoading={ isPlaceholderData }
           />
         ) }
-        { data?.source_code && (
+        { data?.source_code && !isNativeSmartContract(addressHash) && (
           <ContractSourceCode
             address={ addressHash }
             implementationAddress={ addressInfo?.implementation_address ?? undefined }
@@ -279,7 +280,7 @@ const ContractCode = ({ addressHash, noSocket }: Props) => {
             isLoading={ isPlaceholderData }
           />
         ) }
-        { data?.deployed_bytecode && (
+        { data?.deployed_bytecode && !isNativeSmartContract(addressHash) && (
           <RawDataSnippet
             data={ data.deployed_bytecode }
             title="Deployed ByteCode"

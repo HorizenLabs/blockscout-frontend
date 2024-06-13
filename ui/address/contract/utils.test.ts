@@ -1,4 +1,10 @@
-import { prepareAbi } from './utils';
+import { prepareAbi,
+  isNativeSmartContract,
+  WITHDRAWAL_REQUEST_CONTRACT,
+  FORGER_STAKE_CONTRACT,
+  FORGER_STAKE_V2_CONTRACT,
+  CERTIFCATE_KEY_ROTATION_CONTRACT,
+  MC_ADDRESS_OWNERSHIP_CONTRACT } from './utils';
 
 describe('function prepareAbi()', () => {
   const commonAbi = [
@@ -96,5 +102,18 @@ describe('function prepareAbi()', () => {
 
     const item = abi.find((item) => 'name' in item ? item.name === method.name : false);
     expect(item).toEqual(commonAbi[2]);
+  });
+});
+
+describe('isNativeSmartContract()', () => {
+  test.each([ WITHDRAWAL_REQUEST_CONTRACT, FORGER_STAKE_CONTRACT, FORGER_STAKE_V2_CONTRACT, CERTIFCATE_KEY_ROTATION_CONTRACT, MC_ADDRESS_OWNERSHIP_CONTRACT ])(
+    'returns true if address is a native contract address',
+    (addr) => {
+      expect(isNativeSmartContract(addr)).toBe(true);
+    },
+  );
+
+  it('returns false if address it not a native contract address', () => {
+    expect(isNativeSmartContract('0x42128B43F84654A7A16E30f9ADdF390367F81121')).toBe(false);
   });
 });

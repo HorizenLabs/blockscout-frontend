@@ -2,6 +2,12 @@ import type { Abi } from 'abitype';
 
 import type { SmartContractWriteMethod } from 'types/api/contract';
 
+export const WITHDRAWAL_REQUEST_CONTRACT = '0x0000000000000000000011111111111111111111';
+export const FORGER_STAKE_CONTRACT = '0x0000000000000000000022222222222222222222';
+export const FORGER_STAKE_V2_CONTRACT = '0x0000000000000000000022222222222222222333';
+export const CERTIFCATE_KEY_ROTATION_CONTRACT = '0x0000000000000000000044444444444444444444';
+export const MC_ADDRESS_OWNERSHIP_CONTRACT = '0x0000000000000000000088888888888888888888';
+
 export const getNativeCoinValue = (value: string | Array<unknown>) => {
   const _value = Array.isArray(value) ? value[0] : value;
 
@@ -74,4 +80,14 @@ export function prepareAbi(abi: Abi, item: SmartContractWriteMethod): Abi {
   }
 
   return abi;
+}
+
+export function isNativeSmartContract(address: string) {
+  return [
+    WITHDRAWAL_REQUEST_CONTRACT,
+    FORGER_STAKE_CONTRACT,
+    FORGER_STAKE_V2_CONTRACT,
+    CERTIFCATE_KEY_ROTATION_CONTRACT,
+    MC_ADDRESS_OWNERSHIP_CONTRACT,
+  ].includes(address);
 }
