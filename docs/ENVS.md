@@ -133,7 +133,7 @@ Please be aware that all environment variables prefixed with `NEXT_PUBLIC_` will
 
 &nbsp;
 
-### Footer
+### Footer (not used)
 
 | Variable | Type| Description | Compulsoriness  | Default value | Example value |
 | --- | --- | --- | --- | --- | --- |
