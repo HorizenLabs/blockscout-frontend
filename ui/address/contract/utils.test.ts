@@ -116,4 +116,8 @@ describe('isNativeSmartContract()', () => {
   it('returns false if address it not a native contract address', () => {
     expect(isNativeSmartContract('0x42128B43F84654A7A16E30f9ADdF390367F81121')).toBe(false);
   });
+
+  it('returns false if address is undefined', () => {
+    expect(isNativeSmartContract(undefined)).toBe(false);
+  });
 });

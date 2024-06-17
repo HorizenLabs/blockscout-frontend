@@ -82,7 +82,11 @@ export function prepareAbi(abi: Abi, item: SmartContractWriteMethod): Abi {
   return abi;
 }
 
-export function isNativeSmartContract(address: string) {
+export function isNativeSmartContract(address: string | undefined) {
+  if (!address) {
+    return false;
+  }
+
   return [
     WITHDRAWAL_REQUEST_CONTRACT,
     FORGER_STAKE_CONTRACT,
