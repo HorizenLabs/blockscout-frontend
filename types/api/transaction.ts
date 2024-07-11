@@ -20,6 +20,8 @@ export type SpecialTransaction = {
   index: number;
   to_address: string;
   value: string;
+  value_from_mainchain?: string;
+  value_from_fees?: string;
   timestamp: string;
 }
 
