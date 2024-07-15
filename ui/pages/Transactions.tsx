@@ -4,7 +4,7 @@ import React from 'react';
 import type { RoutedTab } from 'ui/shared/Tabs/types';
 
 import config from 'configs/app';
-import { WITHDRAWAL_REQUEST_CONTRACT_ADDRESS } from 'lib/consts';
+import { FEE_PAYMENTS_TAB, WITHDRAWAL_REQUEST_CONTRACT_ADDRESS } from 'lib/consts';
 import useHasAccount from 'lib/hooks/useHasAccount';
 import useIsMobile from 'lib/hooks/useIsMobile';
 import useNewTxsSocket from 'lib/hooks/useNewTxsSocket';
@@ -56,7 +56,7 @@ const Transactions = () => {
   const feePaymentsQuery = useQueryWithPages({
     resourceName: 'fee_payments',
     options: {
-      enabled: router.query.tab === 'fee-payments',
+      enabled: router.query.tab === FEE_PAYMENTS_TAB,
       placeholderData: generateListStub<'fee_payments'>(SPECIAL_TX, 50, { next_page_params: {
         block_number: 9005713,
         index: 5,
@@ -141,7 +141,7 @@ const Transactions = () => {
     pagination = bwTransfersQuery.pagination;
   } else if (router.query.tab === 'forward-transfers') {
     pagination = fwTransfersQuery.pagination;
-  } else if (router.query.tab === 'fee-payments') {
+  } else if (router.query.tab === FEE_PAYMENTS_TAB) {
     pagination = feePaymentsQuery.pagination;
   }
 
