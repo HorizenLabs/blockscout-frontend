@@ -1,9 +1,11 @@
 import { Tr, Td, VStack, Skeleton } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 import type { SpecialTransaction } from 'types/api/transaction';
 
+import { MAINCHAIN_REWARDS_DISTRIBUTION_TAB } from 'lib/consts';
 import useTimeAgoIncrement from 'lib/hooks/useTimeAgoIncrement';
 import CurrencyValue from 'ui/shared/CurrencyValue';
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
@@ -18,6 +20,8 @@ type Props = {
 }
 
 const SpecialTxsTableItem = ({ tx, showBlockInfo, currentAddress, enableTimeIncrement, isLoading }: Props) => {
+  const router = useRouter();
+  const isMainchainRewardsDistributionTab = router.query.tab === MAINCHAIN_REWARDS_DISTRIBUTION_TAB;
   const dataTo = {
     hash: tx.to_address,
     implementation_name: null,
@@ -75,7 +79,8 @@ const SpecialTxsTableItem = ({ tx, showBlockInfo, currentAddress, enableTimeIncr
         { addressTo }
       </Td>
       <Td isNumeric>
-        <CurrencyValue value={ tx.value } accuracy={ 18 } wordBreak="break-word" isLoading={ isLoading }/>
+        <CurrencyValue value={ isMainchainRewardsDistributionTab ? tx.value_from_mainchain || '' : tx.value }
+          accuracy={ 18 } wordBreak="break-word" isLoading={ isLoading }/>
       </Td>
     </Tr>
   );

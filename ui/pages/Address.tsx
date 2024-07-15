@@ -8,7 +8,7 @@ import type { RoutedTab } from 'ui/shared/Tabs/types';
 import config from 'configs/app';
 import iconSuccess from 'icons/status/success.svg';
 import useApiQuery from 'lib/api/useApiQuery';
-import { EON_FORGER_SUBSIDIES_ADDRESS } from 'lib/consts';
+import { EON_FORGER_SUBSIDIES_ADDRESS, MAINCHAIN_REWARDS_DISTRIBUTION_TAB } from 'lib/consts';
 import { useAppContext } from 'lib/contexts/app';
 import useContractTabs from 'lib/hooks/useContractTabs';
 import useIsSafeAddress from 'lib/hooks/useIsSafeAddress';
@@ -75,7 +75,7 @@ const AddressPageContent = () => {
   const tabs: Array<RoutedTab> = React.useMemo(() => {
     return [
       {
-        id: 'mainchain_rewards_distribution',
+        id: MAINCHAIN_REWARDS_DISTRIBUTION_TAB,
         title: 'Mainchain Rewards Distribution',
         component: <AddressSpecialTransfers resource="fee_payments_from_mainchain"/>,
       },
@@ -162,7 +162,7 @@ const AddressPageContent = () => {
       } : undefined,
     ].filter(Boolean).filter((tab) => {
       if (hash !== EON_FORGER_SUBSIDIES_ADDRESS) {
-        return tab.id !== 'mainchain_rewards_distribution';
+        return tab.id !== MAINCHAIN_REWARDS_DISTRIBUTION_TAB;
       }
       return true;
     });
