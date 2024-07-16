@@ -118,7 +118,7 @@ const AddressPageContent = () => {
         component: <AddressSpecialTransfers resource="forward_transfers"/>,
       } : undefined,
       !addressQuery.data?.is_contract ? {
-        id: 'fee_payments',
+        id: 'fee-payments',
         title: 'Fee Payments',
         component: <AddressSpecialTransfers resource="fee_payments"/>,
       } : undefined,

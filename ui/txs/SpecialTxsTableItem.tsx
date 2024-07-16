@@ -5,7 +5,7 @@ import React from 'react';
 
 import type { SpecialTransaction } from 'types/api/transaction';
 
-import { MAINCHAIN_REWARDS_DISTRIBUTION_TAB } from 'lib/consts';
+import { FEE_PAYMENTS_TAB, MAINCHAIN_REWARDS_DISTRIBUTION_TAB } from 'lib/consts';
 import useTimeAgoIncrement from 'lib/hooks/useTimeAgoIncrement';
 import CurrencyValue from 'ui/shared/CurrencyValue';
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
@@ -21,6 +21,7 @@ type Props = {
 
 const SpecialTxsTableItem = ({ tx, showBlockInfo, currentAddress, enableTimeIncrement, isLoading }: Props) => {
   const router = useRouter();
+  const isFeePaymentsTab = router.query.tab === FEE_PAYMENTS_TAB;
   const isMainchainRewardsDistributionTab = router.query.tab === MAINCHAIN_REWARDS_DISTRIBUTION_TAB;
   const dataTo = {
     hash: tx.to_address,
@@ -78,6 +79,18 @@ const SpecialTxsTableItem = ({ tx, showBlockInfo, currentAddress, enableTimeIncr
       <Td>
         { addressTo }
       </Td>
+      {
+        isFeePaymentsTab && (
+          <>
+            <Td isNumeric>
+              <CurrencyValue value={ tx.value_from_mainchain || '0' } accuracy={ 18 } wordBreak="break-word" isLoading={ isLoading }/>
+            </Td>
+            <Td isNumeric>
+              <CurrencyValue value={ tx.value_from_fees || '0' } accuracy={ 18 } wordBreak="break-word" isLoading={ isLoading }/>
+            </Td>
+          </>
+        )
+      }
       <Td isNumeric>
         <CurrencyValue value={ isMainchainRewardsDistributionTab ? tx.value_from_mainchain || '' : tx.value }
           accuracy={ 18 } wordBreak="break-word" isLoading={ isLoading }/>

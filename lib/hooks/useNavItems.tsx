@@ -25,7 +25,7 @@ import transactionsIcon from 'icons/transactions.svg';
 import txnBatchIcon from 'icons/txn_batches.svg';
 import verifiedIcon from 'icons/verified.svg';
 import watchlistIcon from 'icons/watchlist.svg';
-import { WITHDRAWAL_REQUEST_CONTRACT_ADDRESS } from 'lib/consts';
+import { FEE_PAYMENTS_TAB, WITHDRAWAL_REQUEST_CONTRACT_ADDRESS } from 'lib/consts';
 import { rightLineArrow } from 'lib/html-entities';
 import UserAvatar from 'ui/shared/UserAvatar';
 
@@ -65,9 +65,9 @@ export default function useNavItems(): ReturnType {
     };
     const feePayments = {
       text: 'Fee payments',
-      nextRoute: { pathname: '/txs' as const, query: { tab: 'fee-payments' } },
+      nextRoute: { pathname: '/txs' as const, query: { tab: FEE_PAYMENTS_TAB } },
       icon: transactionsIcon,
-      isActive: pathname === '/txs' && query.tab === 'fee-payments',
+      isActive: pathname === '/txs' && query.tab === FEE_PAYMENTS_TAB,
     };
     const topAccounts = !config.UI.views.address.hiddenViews?.top_accounts ? {
       text: 'Top accounts',
@@ -85,7 +85,7 @@ export default function useNavItems(): ReturnType {
       text: 'Transactions',
       nextRoute: { pathname: '/txs' as const },
       icon: transactionsIcon,
-      isActive: (pathname === '/txs' && query.tab !== 'fee-payments' && query.tab !== 'forward-transfers') || pathname === '/tx/[hash]',
+      isActive: (pathname === '/txs' && query.tab !== FEE_PAYMENTS_TAB && query.tab !== 'forward-transfers') || pathname === '/tx/[hash]',
     };
     const verifiedContracts =
     // eslint-disable-next-line max-len

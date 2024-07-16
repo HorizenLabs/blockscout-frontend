@@ -1,5 +1,6 @@
 import { Link, Table, Tbody, Tr, Th, Icon } from '@chakra-ui/react';
 import { AnimatePresence } from 'framer-motion';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 import type { SpecialTransaction } from 'types/api/transaction';
@@ -7,6 +8,7 @@ import type { Sort } from 'types/client/txs-sort';
 
 import config from 'configs/app';
 import rightArrowIcon from 'icons/arrows/east.svg';
+import { FEE_PAYMENTS_TAB } from 'lib/consts';
 import * as SocketNewItemsNotice from 'ui/shared/SocketNewItemsNotice';
 import TheadSticky from 'ui/shared/TheadSticky';
 
@@ -39,18 +41,29 @@ const SpecialTxsTable = ({
   enableTimeIncrement,
   isLoading,
 }: Props) => {
+  const router = useRouter();
+  const isFeePaymentsTab = router.query.tab === FEE_PAYMENTS_TAB;
+
   return (
     <Table variant="simple" minWidth="950px" size="xs">
       <TheadSticky top={ top }>
         <Tr>
           <Th width="4%"></Th>
-          { showBlockInfo && <Th width="32%">Block</Th> }
+          { showBlockInfo && <Th width={ isFeePaymentsTab ? '10%' : '32%' }>Block</Th> }
           <Th width="32%">To</Th>
-          <Th width="32%" isNumeric>
+          {
+            isFeePaymentsTab && (
+              <>
+                <Th width="18%" isNumeric>Value from mainchain</Th>
+                <Th width="18%" isNumeric>Value from fees</Th>
+              </>
+            )
+          }
+          <Th width={ isFeePaymentsTab ? '18%' : '32%' } isNumeric>
             <Link onClick={ sort('val') } display="flex" justifyContent="end">
               { sorting === 'val-asc' && <Icon boxSize={ 5 } as={ rightArrowIcon } transform="rotate(-90deg)"/> }
               { sorting === 'val-desc' && <Icon boxSize={ 5 } as={ rightArrowIcon } transform="rotate(90deg)"/> }
-              { `Value ${ config.chain.currency.symbol }` }
+              { `${ isFeePaymentsTab ? 'Total Value' : 'Value' } ${ config.chain.currency.symbol }` }
             </Link>
           </Th>
         </Tr>
