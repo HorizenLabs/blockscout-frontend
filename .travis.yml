@@ -22,3 +22,6 @@ jobs:
   include:
     - name: release_image
       script: ci/script.sh
+
+## Adding this temporalily to check if the build generates the image now: https://travis-ci.community/t/dist-jammy-builds-failing-after-new-travis-build-image/14324/3
+group: previous
