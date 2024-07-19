@@ -5,8 +5,9 @@ import React from 'react';
 
 import type { SpecialTransaction } from 'types/api/transaction';
 
-import { FEE_PAYMENTS_TAB, MAINCHAIN_REWARDS_DISTRIBUTION_TAB } from 'lib/consts';
+import { EON_FORGER_SUBSIDIES_ADDRESS, FEE_PAYMENTS_TAB, MAINCHAIN_REWARDS_DISTRIBUTION_TAB } from 'lib/consts';
 import useTimeAgoIncrement from 'lib/hooks/useTimeAgoIncrement';
+import getQueryParamString from 'lib/router/getQueryParamString';
 import CurrencyValue from 'ui/shared/CurrencyValue';
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
 import BlockEntity from 'ui/shared/entities/block/BlockEntity';
@@ -22,7 +23,10 @@ type Props = {
 const SpecialTxsTableItem = ({ tx, showBlockInfo, currentAddress, enableTimeIncrement, isLoading }: Props) => {
   const router = useRouter();
   const isFeePaymentsTab = router.query.tab === FEE_PAYMENTS_TAB;
-  const isMainchainRewardsDistributionTab = router.query.tab === MAINCHAIN_REWARDS_DISTRIBUTION_TAB;
+
+  const hash = getQueryParamString(router.query.hash);
+  const IS_EON_FORGER_SUBSIDIES_ADDRESS = hash === EON_FORGER_SUBSIDIES_ADDRESS;
+
   const dataTo = {
     hash: tx.to_address,
     implementation_name: null,
@@ -92,8 +96,12 @@ const SpecialTxsTableItem = ({ tx, showBlockInfo, currentAddress, enableTimeIncr
         )
       }
       <Td isNumeric>
-        <CurrencyValue value={ isMainchainRewardsDistributionTab ? tx.value_from_mainchain || '' : tx.value }
-          accuracy={ 18 } wordBreak="break-word" isLoading={ isLoading }/>
+        <CurrencyValue value={
+          (IS_EON_FORGER_SUBSIDIES_ADDRESS &&
+            (router.query.tab === undefined || router.query.tab === MAINCHAIN_REWARDS_DISTRIBUTION_TAB)) ?
+            tx.value_from_mainchain || '' :
+            tx.value }
+        accuracy={ 18 } wordBreak="break-word" isLoading={ isLoading }/>
       </Td>
     </Tr>
   );
